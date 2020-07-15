@@ -14,13 +14,18 @@ p = zeros(m, 1);
 %               your learned logistic regression parameters. 
 %               You should set p to a vector of 0's and 1's
 %
-
-
-
-
-
-
-
+theta_transpose = theta';
+for i = 1:m
+  temp = 0;
+  for j = 1:size(X)(2)
+    temp = temp + theta_transpose(1, j) * X(i, j);
+  endfor;
+  if(sigmoid(temp) >= 0.5)
+    p(i,1) = 1;
+  else
+    p(i,1) = 0;
+  endif;
+endfor;
 % =========================================================================
 
 
