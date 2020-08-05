@@ -57,3 +57,34 @@ J = -J / m;
 
 fprintf(['Cost at parameters (loaded from ex4weights): %f '...
          '\n(this value should be about 0.287629)\n'], J);
+
+         
+lambda = 1;
+r = 0;
+for j=1:size(Theta1, 1)
+  for k=2:size(Theta1, 2)
+    r = r + power(Theta1(j, k), 2);
+  endfor;
+endfor;
+
+for j=1:size(Theta2, 1)
+  for k=2:size(Theta2, 2)
+    r = r + power(Theta2(j, k), 2);
+  endfor;
+endfor;
+
+r = (lambda / (2 * m)) * r;
+
+J = J + r;
+
+fprintf(['Cost at parameters (loaded from ex4weights): %f '...
+         '\n(this value should be about 0.383770)\n'], J);
+
+% sigmoid gradient
+z = [-1 -0.5 0 0.5 1];
+g_z = sigmoid(z);
+temp = ones(size(g_z)) - g_z;
+g = g_z .* temp;
+fprintf('Sigmoid gradient evaluated at [-1 -0.5 0 0.5 1]:\n  ');
+fprintf('%f ', g);
+fprintf('\n\n');

@@ -61,6 +61,7 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+% Calculating cost without regularization
 X = [ones(m, 1) X];
 for i=1:m
   y_onehot = zeros(num_labels, 1);
@@ -79,6 +80,23 @@ for i=1:m
   endfor;
 endfor;
 J = -J / m;
+
+% Calculating regularization
+r = 0;
+for j=1:size(Theta1, 1)
+  for k=2:size(Theta1, 2)
+    r = r + power(Theta1(j, k), 2);
+  endfor;
+endfor;
+for j=1:size(Theta2, 1)
+  for k=2:size(Theta2, 2)
+    r = r + power(Theta2(j, k), 2);
+  endfor;
+endfor;
+r = (lambda / (2 * m)) * r;
+
+% adding cost and regularization
+J = J + r;
 % -------------------------------------------------------------
 
 % =========================================================================
