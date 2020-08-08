@@ -97,6 +97,36 @@ r = (lambda / (2 * m)) * r;
 
 % adding cost and regularization
 J = J + r;
+
+% implementing Backpropagation
+for i = 1:m
+    %The raw neuros counts the bias unit, which means it as a0 -> a25, not count a1
+    a1 = X(i,:)'; % insert the bias unit
+    z2 = Theta1 * a1;
+    a2 = [1 ; sigmoid(z2)];
+    z3 = Theta2 * a2;
+    a3 = sigmoid(z3);
+    hx = a3;
+    %y_vec = zeros(num_labels,1);
+    %y_vec(y(i)) = 1; % this the compare y to be a binary vector
+    %one_query_cost = (-y_vec' * log(hx) - (1 - y_vec') * log(1 - hx));
+    %J = J + one_query_cost;
+    y_vec = zeros(num_labels,1);
+    y_vec(y(i)) = 1; % this the compare y to be a binary vector
+    delta3 = (a3 - y_vec);
+    
+    g_z2 = sigmoid(z2);
+    temp = ones(size(g_z2)) - g_z2;
+    g_dash_z2 = g_z2 .* temp;
+  
+    delta2 = (Theta2(:,2:end)' * delta3) .* g_dash_z2;
+    Theta2_grad = Theta2_grad + delta3 * a2';
+    Theta1_grad = Theta1_grad + delta2 * a1';
+endfor;
+%XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Theta1_grad = Theta1_grad / m;
+Theta2_grad = Theta2_grad / m;
 % -------------------------------------------------------------
 
 % =========================================================================
