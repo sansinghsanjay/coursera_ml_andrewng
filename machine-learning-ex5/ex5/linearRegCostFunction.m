@@ -17,19 +17,23 @@ grad = zeros(size(theta));
 %               regression for a particular choice of theta.
 %
 %               You should set J to the cost and grad to the gradient.
-%
+% calculating cost
+% calculating first part of cost expression (before "+" sign)
+temp0 = X * theta;
+temp1 = temp0 - y;
+temp2 = power(temp1, 2);
+temp3 = sum(temp2);
+temp4 = temp3 / (2 * m);
+% calculating second part of cost expression (after "+" sign)
+theta(1) = 0;
+temp5 = power(theta, 2);
+temp6 = sum(temp5);
+temp7 = (lambda * temp6) / (2 * m);
+J = temp4 + temp7;
 
 
-
-
-
-
-
-
-
-
-
-
+% calculating gradient
+grad = ((1/m) * (X' * (temp1))) + ((lambda/m) * theta);
 % =========================================================================
 
 grad = grad(:);

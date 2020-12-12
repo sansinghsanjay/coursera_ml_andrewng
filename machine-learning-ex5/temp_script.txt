@@ -1,0 +1,50 @@
+%% Initialization
+clear ; close all; clc
+
+% Load from ex5data1: 
+% You will have X, y, Xval, yval, Xtest, ytest in your environment
+load ('ex5data1.mat');
+
+theta = [1 ; 1];
+
+m = length(y); % number of training examples
+
+% You need to return the following variables correctly 
+J = 0;
+grad = zeros(size(theta));
+
+% DON'T ADD THESE LINES IN FINAL CODE:
+X = [ones(m, 1) X];
+lambda = 1;
+
+% calculating first part of expression (before "+" sign)
+temp0 = X * theta;
+temp1 = temp0 - y;
+temp2 = power(temp1, 2);
+temp3 = sum(temp2);
+temp4 = temp3 / (2 * m);
+% calculating second part of expression (after "+" sign)
+%temp_theta = theta(2:end);
+theta(1) = 0;
+temp5 = power(theta, 2);
+temp6 = sum(temp5);
+temp7 = (lambda * temp6) / (2 * m);
+J = temp4 + temp7;
+
+grad = ((1/m) * (X' * (temp1))) + ((lambda/m) * theta);
+
+
+% calculating gradient - first part of expression (when j = 0)
+temp8 = temp1 .* X(:, 1);
+temp9 = sum(temp8);
+temp10 = temp9 / m;
+% calculating gradient - second part of expression (when j >= 1)
+temp11 = temp1 .* X(:, 2:end);
+temp12 = sum(temp11) / m;
+temp13 = (lambda / m) * theta;
+temp14 = temp12 + temp13;
+
+grad(1) = temp10;
+for i=2:size(theta)(1)
+	grad(i) = temp14(i-1);
+endfor
