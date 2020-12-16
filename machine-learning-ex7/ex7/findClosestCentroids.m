@@ -20,13 +20,17 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
-
-
-
-
-
-
-
+m = size(X, 1);
+for i=1:m
+	minv = (X(i, :)-centroids(1, :))*(X(i, :)-centroids(1, :))';
+	idx(i) = 1;
+	for j=1:K
+		if (X(i, :)-centroids(j, :))*(X(i, :)-centroids(j, :))' < minv
+			minv = (X(i, :)-centroids(j, :))*(X(i, :)-centroids(j, :))';
+			idx(i) = j;
+		endif
+	endfor
+endfor
 % =============================================================
 
 end
